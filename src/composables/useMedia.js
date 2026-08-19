@@ -1,10 +1,10 @@
-// useMedia — actualmente usa mock, mañana apunta a movie_api (GoFiber / Rust).
-// Para activarlo contra la API real, cambiar USE_MOCK = false y apuntar API_BASE.
+// useMedia — actualmente apunta a movie_api (Go + Fiber).
+// Para volver al mock local, cambiar USE_MOCK = true.
 
 import { ref, computed } from 'vue'
 import * as mock from '@/data/mockMedia'
 
-const USE_MOCK = true
+const USE_MOCK = false
 const API_BASE = '/api'
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
