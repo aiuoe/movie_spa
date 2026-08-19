@@ -16,6 +16,19 @@ async function get(path) {
   return res.json()
 }
 
+async function post(path, body) {
+  const res = await fetch(`${API_BASE}${path}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  })
+  if (!res.ok) {
+    const t = await res.text()
+    throw new Error(t || `API ${res.status}`)
+  }
+  return res.json()
+}
+
 export function useMedia() {
   const loading = ref(false)
   const error = ref(null)
@@ -84,6 +97,19 @@ export function useMedia() {
     return get(`/search?q=${encodeURIComponent(q)}`)
   }
 
+  // Búsqueda en TMDB (vía Radarr/Sonarr) — devuelve títulos del mundo
+  // entero que podés "pedir" si no están en el catálogo local.
+  async function lookup(q, kind = 'movie') {
+    if (!q) return []
+    const out = await get(`/lookup?kind=${kind}&q=${encodeURIComponent(q)}`)
+    return out.results || []
+  }
+
+  // "Pedir" un título — lo manda a Radarr/Sonarr para que descargue.
+  async function request({ kind, title, external_id }) {
+    return post('/request', { kind, title, external_id })
+  }
+
   const hasMovies = computed(() => movies.value.length > 0)
   const hasSeries = computed(() => series.value.length > 0)
 
@@ -100,6 +126,8 @@ export function useMedia() {
     hasSeries,
     loadHome,
     getById,
-    search
+    search,
+    lookup,
+    request
   }
 }
