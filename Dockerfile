@@ -39,7 +39,6 @@ RUN bun install --frozen-lockfile --production=false
 
 COPY --from=src /src/index.html /src/vite.config.js /src/tailwind.config.js /src/postcss.config.js ./
 COPY --from=src /src/src ./src
-COPY --from=src /src/public ./public
 
 RUN bun run build
 
