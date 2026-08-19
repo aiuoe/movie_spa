@@ -1,0 +1,11 @@
+node_modules
+dist
+.git
+.gitignore
+.dockerignore
+Dockerfile
+# Importante: NO ignorar el dir `docker/` — contiene nginx.conf
+.env
+.env.*
+*.log
+bun.lockb
