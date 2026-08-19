@@ -23,14 +23,9 @@ FROM alpine/git:latest AS src
 ARG REPO
 ARG COMMIT
 RUN apk add --no-cache bash && \
-    git clone --filter=blob:none --no-checkout https://github.com/${REPO}.git /src && \
+    git clone https://github.com/${REPO}.git /src && \
     cd /src && \
-    if echo "${COMMIT}" | grep -qE '^[0-9a-f]{7,}$'; then \
-      git fetch --depth 1 origin ${COMMIT} && git checkout ${COMMIT}; \
-    else \
-      git checkout ${COMMIT}; \
-    fi && \
-    git log -1 --format="%H %s" > /COMMIT_INFO
+    git checkout ${COMMIT}
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Stage 1: build con Bun + Vite
