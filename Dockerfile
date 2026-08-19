@@ -19,7 +19,7 @@ ARG COMMIT=main
 # ──────────────────────────────────────────────────────────────────────────────
 # Stage 0: clonar el commit exacto desde GitHub
 # ──────────────────────────────────────────────────────────────────────────────
-FROM alpine/git:2.47 AS src
+FROM alpine/git:latest AS src
 ARG REPO
 ARG COMMIT
 RUN apk add --no-cache bash && \
