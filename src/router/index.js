@@ -28,6 +28,12 @@ const router = createRouter({
       meta: { title: 'Buscar' }
     },
     {
+      path: '/live',
+      name: 'live',
+      component: () => import('@/views/LiveTVView.vue'),
+      meta: { title: 'TV en vivo' }
+    },
+    {
       path: '/profile',
       name: 'profile',
       component: () => import('@/views/ProfileView.vue'),

@@ -67,7 +67,7 @@ async function ask() {
       v-else
       class="pointer-events-none absolute right-2 top-2 rounded bg-amber-500/90 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide"
     >
-      Pendiente
+      Próximamente
     </span>
 
     <span

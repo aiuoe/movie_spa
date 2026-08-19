@@ -6,7 +6,7 @@ import { computed } from 'vue'
 const route = useRoute()
 const tabs = [
   { to: '/', name: 'home', label: 'Inicio', icon: 'mdi:home-outline', active: 'mdi:home' },
-  { to: '/library', name: 'library', label: 'Biblioteca', icon: 'mdi:view-grid-outline', active: 'mdi:view-grid' },
+  { to: '/live', name: 'live', label: 'TV', icon: 'mdi:broadcast', active: 'mdi:broadcast' },
   { to: '/search', name: 'search', label: 'Buscar', icon: 'mdi:magnify', active: 'mdi:magnify' },
   { to: '/profile', name: 'profile', label: 'Perfil', icon: 'mdi:account-circle-outline', active: 'mdi:account-circle' }
 ]

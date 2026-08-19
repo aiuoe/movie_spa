@@ -146,7 +146,7 @@ async function sendRequest(item) {
             <span
               v-else
               class="pointer-events-none absolute right-2 top-2 rounded bg-amber-500/90 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide"
-            >Pendiente</span>
+            >Próximamente</span>
             <span v-if="item.storage_key" class="pointer-events-none absolute inset-0 grid place-items-center opacity-0 transition group-hover:opacity-100">
               <span class="grid h-10 w-10 place-items-center rounded-full bg-white/90 text-black shadow-lg">
                 <Icon icon="mdi:play" class="text-2xl" />
