@@ -20,7 +20,3 @@ import BottomNav from '@/components/BottomNav.vue'
 .fade-enter-active, .fade-leave-active { transition: opacity .2s ease; }
 .fade-enter-from, .fade-leave-to { opacity: 0; }
 </style>
-<script setup>
-// Force build change
-console.log('movie_spa build 2.0.1')
-</script>
