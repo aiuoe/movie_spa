@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { Icon } from '@iconify/vue'
 
@@ -25,7 +25,6 @@ const hasStorage = computed(() => !!props.item.storage_key)
 const requesting = ref(false)
 const requested = ref(false)
 
-import { ref } from 'vue'
 async function ask() {
   if (!props.item.external_id && !props.item.tmdb_id) return
   requesting.value = true
@@ -54,12 +53,10 @@ async function ask() {
       @error="(e) => e.target.src = `https://placehold.co/500x750/262626/999?text=${encodeURIComponent(item.title)}`"
     />
 
-    <!-- Badge -->
     <span v-if="item.kind === 'series'" class="pointer-events-none absolute left-2 top-2 rounded bg-black/60 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide backdrop-blur">
       Serie
     </span>
 
-    <!-- Status badge: disponible / no disponible -->
     <span
       v-if="hasStorage"
       class="pointer-events-none absolute right-2 top-2 rounded bg-emerald-500/90 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide"
@@ -73,7 +70,6 @@ async function ask() {
       Pendiente
     </span>
 
-    <!-- Play centrado en hover (sólo si está disponible) -->
     <span
       v-if="hasStorage"
       class="pointer-events-none absolute inset-0 grid place-items-center opacity-0 transition group-hover:opacity-100"
@@ -83,13 +79,11 @@ async function ask() {
       </span>
     </span>
 
-    <!-- Info overlay -->
     <div class="pointer-events-none absolute inset-x-0 bottom-0 translate-y-2 bg-gradient-to-t from-black/95 via-black/60 to-transparent p-2.5 opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">
       <p class="line-clamp-2 text-xs font-semibold">{{ item.title }}</p>
       <p class="text-[10px] text-white/60">{{ item.year }} · ★ {{ item.rating }}</p>
     </div>
 
-    <!-- Botón "Pedir" — sólo si NO está disponible y showRequest -->
     <button
       v-if="!hasStorage && showRequest"
       @click.stop="ask"
