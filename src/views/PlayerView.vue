@@ -13,22 +13,29 @@ const { getById } = useMedia()
 const media = ref(null)
 const loading = ref(true)
 const selectedEpisode = ref(null)
+const playSrc = ref('')
 
 async function load() {
   loading.value = true
+  media.value = null
+  playSrc.value = ''
   media.value = await getById(route.params.id)
   selectedEpisode.value = media.value?.episodes?.[0] || null
+  // Pedimos al API una presigned URL fresca — es lo que el <video> va a usar.
+  try {
+    const r = await fetch(`/api/media/${route.params.id}/stream`)
+    if (r.ok) {
+      const j = await r.json()
+      playSrc.value = j.url || ''
+    }
+  } catch (e) {
+    console.warn('stream url fetch failed', e)
+  }
   loading.value = false
 }
 
 onMounted(load)
 watch(() => route.params.id, load)
-
-const playSrc = computed(() => {
-  if (!media.value) return ''
-  // Cuando movie_api esté listo, esto se reemplaza por la URL real del stream.
-  return media.value.source
-})
 
 function back() {
   if (window.history.length > 1) router.back()
