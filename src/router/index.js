@@ -10,6 +10,12 @@ const router = createRouter({
       meta: { title: 'Inicio' }
     },
     {
+      path: '/media/:id',
+      name: 'detail',
+      component: () => import('@/views/DetailView.vue'),
+      meta: { title: 'Detalle' }
+    },
+    {
       path: '/watch/:id',
       name: 'player',
       component: () => import('@/views/PlayerView.vue'),

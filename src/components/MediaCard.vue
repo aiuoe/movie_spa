@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, RouterLink } from 'vue-router'
 import { Icon } from '@iconify/vue'
 
 const props = defineProps({
@@ -12,7 +12,6 @@ const props = defineProps({
 const emit = defineEmits(['request'])
 
 const router = useRouter()
-const open = () => router.push({ name: 'player', params: { id: props.item.id } })
 
 const aspect = computed(() => (props.item.kind === 'series' ? 'aspect-[16/10]' : 'aspect-[2/3]'))
 const widthCls = computed(() => {
@@ -39,9 +38,8 @@ async function ask() {
 
 <template>
   <div :class="['group relative shrink-0 snap-start overflow-hidden rounded-xl bg-ink-700 ring-1 ring-white/5 card-hover text-left', widthCls, aspect]">
-    <button
-      type="button"
-      @click="open"
+    <RouterLink
+      :to="{ name: 'detail', params: { id: item.id } }"
       class="absolute inset-0 z-0"
       :aria-label="`Ver ${item.title}`"
     />
