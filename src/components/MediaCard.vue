@@ -59,13 +59,21 @@ async function ask() {
       v-if="hasStorage"
       class="pointer-events-none absolute right-2 top-2 rounded bg-emerald-500/90 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide"
     >
-      Disponible
+      ✓ Disp.
     </span>
     <span
-      v-else
+      v-else-if="isEstreno"
       class="pointer-events-none absolute right-2 top-2 rounded bg-amber-500/90 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide"
     >
-      Próximamente
+      ⭐ Estreno
+    </span>
+
+    <!-- Provider badge (esquina inferior izquierda) -->
+    <span
+      v-if="item.providers?.[0]"
+      class="pointer-events-none absolute bottom-12 left-2 rounded bg-black/70 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide backdrop-blur"
+    >
+      {{ item.providers[0] }}
     </span>
 
     <span
