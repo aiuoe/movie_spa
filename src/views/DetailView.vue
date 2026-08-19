@@ -167,6 +167,17 @@ function back() {
               <span v-if="media.lang" class="rounded bg-white/10 px-2 py-0.5 text-xs uppercase">{{ media.lang }}</span>
             </div>
 
+            <!-- Provider badges -->
+            <div v-if="media.providers?.length" class="flex flex-wrap gap-2">
+              <span
+                v-for="p in media.providers"
+                :key="p"
+                class="rounded-full border border-white/20 bg-white/5 px-3 py-1 text-xs font-semibold"
+              >
+                {{ p }}
+              </span>
+            </div>
+
             <div v-if="media.genres?.length" class="flex flex-wrap gap-2">
               <span
                 v-for="g in media.genres"
