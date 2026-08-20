@@ -1,17 +1,41 @@
 <script setup>
-import { computed, ref } from 'vue'
-import { useRouter, RouterLink } from 'vue-router'
+import { computed } from 'vue'
+import { RouterLink } from 'vue-router'
 import { Icon } from '@iconify/vue'
 
 const props = defineProps({
   item: { type: Object, required: true },
-  size: { type: String, default: 'md' }, // 'sm' | 'md' | 'lg'
+  size: { type: String, default: 'md' },
   showRequest: { type: Boolean, default: true }
 })
 
-const emit = defineEmits(['request'])
+// Genera un SVG data URI como FALLBACK garantizado.
+const PROVIDER_BG = {
+  Netflix: '#e50914', 'Disney+': '#0f1e3d', 'HBO Max': '#9b51e0',
+  'Paramount+': '#0064ff', Hulu: '#1ce783', 'Apple TV+': '#1a1a1a',
+  'Prime Video': '#1399ff', Demo: '#404040'
+}
+const PROVIDER_BRAND = {
+  Netflix: 'NETFLIX', 'Disney+': 'DISNEY+', 'HBO Max': 'HBO MAX',
+  'Paramount+': 'PARAMOUNT+', Hulu: 'HULU', 'Apple TV+': 'APPLE TV+',
+  'Prime Video': 'PRIME VIDEO', Demo: 'DEMO'
+}
 
-const router = useRouter()
+function fallbackDataUri(p) {
+  const bg = PROVIDER_BG[p] || '#262626'
+  const brand = PROVIDER_BRAND[p] || (p || '').toUpperCase()
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 750'><rect width='500' height='750' fill='${bg}'/><text x='250' y='380' font-family='sans-serif' font-size='32' font-weight='800' fill='#fff' text-anchor='middle'>${brand}</text></svg>`
+  return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg)
+}
+
+const safePoster = computed(() => {
+  // Si no hay poster o es placehold.co, usar fallback inline
+  const p = props.item?.poster
+  if (!p || p.includes('placehold.co') || p.includes('error')) {
+    return fallbackDataUri(props.item?.providers?.[0])
+  }
+  return p
+})
 
 const aspect = computed(() => (props.item.kind === 'series' ? 'aspect-[16/10]' : 'aspect-[2/3]'))
 const widthCls = computed(() => {
