@@ -116,7 +116,8 @@ export function useMedia() {
         trending.value = decorate(t)
         movies.value = decorate(m)
         series.value = decorate(s)
-        continueWatching.value = decorate(cw?.map(c => ({...c.media, progress: c.progress, episode: c.episode})) || [])
+        // /api/me/continue ya devuelve items planos con title/year/etc + progress + episode
+        continueWatching.value = decorate(cw || [])
         hero.value = hp && decorate([hp])[0]
         top10.value = decorate(t10)
       }
