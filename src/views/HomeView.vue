@@ -154,9 +154,10 @@ async function sendRequest(item) {
             <img
               :src="item.poster"
               :alt="item.title"
-              loading="lazy"
+              loading="eager"
+              decoding="async"
               class="absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-105"
-              @error="(e) => e.target.src = `https://placehold.co/500x750/262626/999?text=${encodeURIComponent(item.title)}`"
+              @error="(e) => e.target.src = `data:image/svg+xml;utf8,${encodeURIComponent('<svg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 500 750\\'><rect width=\\'500\\' height=\\'750\\' fill=\\'%23333\\'/><text x=\\'250\\' y=\\'380\\' font-family=\\'sans-serif\\' font-size=\\'24\\' font-weight=\\'800\\' fill=\\'%23fff\\' text-anchor=\\'middle\\'>' + (item.title || '').replace(/[<>&]/g, '') + '</text></svg>')}`"
             />
             <span v-if="item.kind === 'series'" class="pointer-events-none absolute left-2 top-2 rounded bg-black/60 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide backdrop-blur">Serie</span>
             <span
