@@ -50,7 +50,7 @@ const providerRows = computed(() => {
 
 function onImgError(e, item) {
   // Fallback inline SVG con el título — funciona siempre
-  const title = (item?.title || || '').replace(/[<>&]/g, ' ')
+  const title = (item?.title || '').replace(/[<>&]/g, ' ')
   const bg = '#262626', fg = '#eeeeee'
   const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 750'><rect width='500' height='750' fill='${bg}'/><text x='250' y='380' font-family='sans-serif' font-size='28' font-weight='800' fill='${fg}' text-anchor='middle'>${title.slice(0, 28)}</text></svg>`
   e.target.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(svg)
