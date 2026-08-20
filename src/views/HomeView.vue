@@ -48,6 +48,14 @@ const providerRows = computed(() => {
   return rows
 })
 
+function onImgError(e, item) {
+  // Fallback inline SVG con el título — funciona siempre
+  const title = (item?.title || || '').replace(/[<>&]/g, ' ')
+  const bg = '#262626', fg = '#eeeeee'
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 750'><rect width='500' height='750' fill='${bg}'/><text x='250' y='380' font-family='sans-serif' font-size='28' font-weight='800' fill='${fg}' text-anchor='middle'>${title.slice(0, 28)}</text></svg>`
+  e.target.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(svg)
+}
+
 async function sendRequest(item) {
   try {
     // Si el item ya tiene external_id (de la seed), lo usamos directo
@@ -157,7 +165,7 @@ async function sendRequest(item) {
               loading="eager"
               decoding="async"
               class="absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-105"
-              @error="(e) => e.target.src = `data:image/svg+xml;utf8,${encodeURIComponent('<svg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 500 750\\'><rect width=\\'500\\' height=\\'750\\' fill=\\'%23333\\'/><text x=\\'250\\' y=\\'380\\' font-family=\\'sans-serif\\' font-size=\\'24\\' font-weight=\\'800\\' fill=\\'%23fff\\' text-anchor=\\'middle\\'>' + (item.title || '').replace(/[<>&]/g, '') + '</text></svg>')}`"
+              @error="onImgError($event, item)"
             />
             <span v-if="item.kind === 'series'" class="pointer-events-none absolute left-2 top-2 rounded bg-black/60 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide backdrop-blur">Serie</span>
             <span
