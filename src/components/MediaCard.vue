@@ -61,18 +61,18 @@ async function ask() {
 </script>
 
 <template>
-  <div :class="['group relative shrink-0 snap-start overflow-hidden rounded-xl bg-ink-700 ring-1 ring-white/5 card-hover text-left', widthCls, aspect]">
-    <RouterLink
-      :to="{ name: 'detail', params: { id: item.id } }"
-      class="absolute inset-0 z-0"
-      :aria-label="`Ver ${item.title}`"
-    />
+  <RouterLink
+    :to="{ name: 'detail', params: { id: item.id } }"
+    :class="['group relative block shrink-0 snap-start overflow-hidden rounded-xl bg-ink-700 ring-1 ring-white/5 card-hover text-left no-underline', widthCls, aspect]"
+    :aria-label="`Ver ${item.title}`"
+  >
     <img
-      :src="item.poster || `https://placehold.co/500x750/262626/999?text=${encodeURIComponent(item.title)}`"
+      :src="item.poster"
       :alt="item.title"
-      loading="lazy"
+      loading="eager"
+      decoding="async"
       class="absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-105"
-      @error="(e) => e.target.src = `https://placehold.co/500x750/262626/999?text=${encodeURIComponent(item.title)}`"
+      @error="(e) => e.target.src = `data:image/svg+xml;utf8,${encodeURIComponent('<svg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 500 750\\'><rect width=\\'500\\' height=\\'750\\' fill=\\'%23333\\'/><text x=\\'250\\' y=\\'380\\' font-family=\\'sans-serif\\' font-size=\\'24\\' font-weight=\\'800\\' fill=\\'%23fff\\' text-anchor=\\'middle\\'>' + (item.title || '').replace(/[<>&]/g, '') + '</text></svg>')}`"
     />
 
     <span v-if="item.kind === 'series'" class="pointer-events-none absolute left-2 top-2 rounded bg-black/60 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide backdrop-blur">
@@ -113,22 +113,5 @@ async function ask() {
       <p class="line-clamp-2 text-xs font-semibold">{{ item.title }}</p>
       <p class="text-[10px] text-white/60">{{ item.year }} · ★ {{ item.rating }}</p>
     </div>
-
-    <button
-      v-if="!hasStorage && showRequest"
-      @click.stop="ask"
-      :disabled="requesting || requested"
-      class="absolute inset-x-2 bottom-2 z-10 flex items-center justify-center gap-1 rounded-full bg-brand-500 py-1.5 text-xs font-bold text-white shadow-lg transition hover:bg-brand-600 disabled:opacity-60"
-    >
-      <template v-if="requested">
-        <Icon icon="mdi:check" /> En cola
-      </template>
-      <template v-else-if="requesting">
-        <Icon icon="mdi:loading" class="animate-spin" />
-      </template>
-      <template v-else>
-        <Icon icon="mdi:download" /> Cargar
-      </template>
-    </button>
-  </div>
+  </RouterLink>
 </template>
